@@ -1,6 +1,6 @@
 # css-class-generator
 
-Generates a sequential valid css class.
+Generates a sequential, valid CSS class, generating the next smallest class names possible.
 
 ```bash
 npm install --save css-class-generator
@@ -10,26 +10,23 @@ npm install --save css-class-generator
 
 `cssNameGenerator(prefix = '')` -> iterator
 
-Supports a legacy iteration mode (just an object with a function `next`).
+Will throw if prefix is not a valid class name (unless the prefix is `-`). The exception will be thrown when the first value is being yielded.
 
-Use `.` as a prefix if you want real css class names.
+Class names are generated without a leading `.`.
+
+It uses generators, so you'll have to be using a version of node that supports this.
 
 # Example
-
-ES5:
-
-```js
-const cssNameGenerator = require('css-class-generator');
-var generator = cssNameGenerator('prefix-');
-generator.next() // { value: 'prefix-A', done: false }
-generator.next() // { value: 'prefix-B', done: false }
-```
-
-ES6:
 
 ```js
 const cssNameGenerator = require('css-class-generator');
 for (let value of cssNameGenerator()) {
   // 'A', 'B', ...
+}
+for (let value of cssNameGenerator('-')) {
+  // '-A', '-B', ...
+}
+for (let value of cssNameGenerator('custom-namespace-')) {
+  // You get the idea...
 }
 ```

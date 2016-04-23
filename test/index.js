@@ -31,3 +31,12 @@ test('generate name with other prefix', t => {
     t.true(isValid, `Expected ${value} to be a valid css selector`);
   }
 });
+
+test('allows hyphen for class name', t => {
+  t.notThrows(() => { cssNameGenerator('-').next(); });
+});
+
+test('throws for invalid class name', t => {
+  t.throws(() => { cssNameGenerator('--').next(); });
+  t.throws(() => { cssNameGenerator('0').next(); });
+});

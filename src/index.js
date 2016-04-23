@@ -51,7 +51,13 @@ function* firstTwoChars() {
   yield* appendGenerator(firstCharacters, secondCharacters());
 }
 
+const validIdent = /^-?[_a-z][_a-z0-9-]*$/i;
+
 module.exports = function* cssNameGenerator(prefix) {
+  if (prefix && prefix !== '-' && !validIdent.test(prefix)) {
+    throw new Error(`Expected prefix (${prefix}) to be a valid css class name`);
+  }
+
   if (!prefix) {
     yield* firstCharacters();
     yield* firstTwoChars();
