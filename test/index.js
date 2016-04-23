@@ -1,9 +1,9 @@
-import test from 'ava';
-import cssNameGenerator from '../src';
+const { test } = require('ava');
+const cssNameGenerator = require('../src');
 
 // http://www.w3.org/TR/CSS21/grammar.html
 const validIdent = /^-?[_a-z][_a-z0-9-]*$/i;
-const numToTest = 1E3;
+const numToTest = 1E6;
 
 test('generate name', t => {
   const generator = cssNameGenerator();
@@ -14,7 +14,20 @@ test('generate name', t => {
   }
 });
 
-test('prefix', t => {
-  const generator = cssNameGenerator('test-');
-  t.is(generator.next().value, 'test-A');
+test('generate name with hyphen prefix', t => {
+  const generator = cssNameGenerator('-');
+  for (let i = 0; i < numToTest; i += 1) {
+    const { value } = generator.next();
+    const isValid = validIdent.test(value);
+    t.true(isValid, `Expected ${value} to be a valid css selector`);
+  }
+});
+
+test('generate name with other prefix', t => {
+  const generator = cssNameGenerator('test');
+  for (let i = 0; i < numToTest; i += 1) {
+    const { value } = generator.next();
+    const isValid = validIdent.test(value);
+    t.true(isValid, `Expected ${value} to be a valid css selector`);
+  }
 });
