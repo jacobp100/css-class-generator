@@ -1,7 +1,7 @@
 {
   "name": "css-class-generator",
   "version": "1.0.0",
-  "description": "",
+  "description": "Generates a sequential, valid CSS class, generating the next smallest class names possible",
   "main": "src/index.js",
   "dependencies": {},
   "devDependencies": {
@@ -13,7 +13,16 @@
   "scripts": {
     "test": "ava -T 60s"
   },
-  "keywords": [],
+  "keywords": [
+    "css",
+    "class",
+    "classname",
+    "name",
+    "generator",
+    "minify",
+    "unique",
+    "id"
+  ],
   "author": "",
   "license": "ISC",
   "repository": {
