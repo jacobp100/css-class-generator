@@ -1,6 +1,6 @@
 {
   "name": "css-class-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generates a sequential, valid CSS class, generating the next smallest class names possible",
   "main": "src/index.js",
   "dependencies": {},
