@@ -1,6 +1,6 @@
 # css-class-generator
 
-Generates a sequential, valid CSS class, generating the next smallest class names possible.
+Maps a given index to a unique valid CSS. Uses the smallest class names possible, with lower indices having smaller class names.
 
 ```bash
 npm install --save css-class-generator
@@ -8,25 +8,28 @@ npm install --save css-class-generator
 
 # API
 
-`cssNameGenerator(prefix = '')` -> iterator
+`cssClassGenerator(index, prefix = '')` -> string
 
-Will throw if prefix is not a valid class name (unless the prefix is `-`). The exception will be thrown when the first value is being yielded.
+Class names are not random - a given index will always return the same class name.
 
 Class names are generated without a leading `.`.
 
-It uses generators, so you'll have to be using a version of node that supports this.
+The prefix option gives more optimal class names than `prefix + cssClassGenerator(index)`. It never returns the prefix alone - it's always appended with something. In development, it will `console.warn` if prefix is not a valid class name (unless the prefix is `-`).
+
+Be careful for high values (`2 ** 30` and above), as JavaScript integer vs float quirks can happen.
 
 # Example
 
 ```js
-const cssNameGenerator = require('css-class-generator');
-for (let value of cssNameGenerator()) {
-  // 'A', 'B', ...
-}
-for (let value of cssNameGenerator('-')) {
-  // '-A', '-B', ...
-}
-for (let value of cssNameGenerator('custom-namespace-')) {
-  // You get the idea...
-}
+const cssClassGenerator = require("css-class-generator");
+
+cssClassGenerator(0); // 'a'
+cssClassGenerator(1); // 'b'
+cssClassGenerator(52); // '_'
+cssClassGenerator(53); // '-a'
+cssClassGenerator(10000); // K3c
+cssClassGenerator(1e9); // CVJ2gb
+
+cssClassGenerator(0, "hello"); // 'helloa'
+cssClassGenerator(1, "hello"); // 'hellob'
 ```
